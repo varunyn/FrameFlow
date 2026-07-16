@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import { FolderUp } from 'lucide-react'
 import { saveAlbumMeta, savePhotos, type StoredPhoto } from '../lib/storage'
 import { generateThumbnail } from '../lib/thumbnails'
+import { PrivacyModal } from './PrivacyModal'
 
 type DirectoryUploadProps = {
   onPhotosUploaded: () => void
@@ -18,6 +19,7 @@ function isImageFile(file: File): boolean {
 export function DirectoryUpload({ onPhotosUploaded }: DirectoryUploadProps) {
   const [isProcessing, setIsProcessing] = useState(false)
   const [progress, setProgress] = useState(0)
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   async function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -81,6 +83,15 @@ export function DirectoryUpload({ onPhotosUploaded }: DirectoryUploadProps) {
         <span>{isProcessing ? `Processing ${progress}…` : 'Choose folder'}</span>
       </label>
       <p className="directory-upload__hint">Select a folder of images to build your gallery.</p>
+      <button
+        className="directory-upload__privacy"
+        type="button"
+        onClick={() => setIsPrivacyOpen(true)}
+        aria-label="Read privacy policy"
+      >
+        Privacy
+      </button>
+      <PrivacyModal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
     </div>
   )
 }

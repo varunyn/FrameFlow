@@ -27,4 +27,15 @@ describe('DirectoryUpload', () => {
 
     await waitFor(() => expect(onPhotosUploaded).toHaveBeenCalled())
   })
+
+  it('shows a privacy link', () => {
+    render(<DirectoryUpload onPhotosUploaded={vi.fn()} />)
+    expect(screen.getByRole('button', { name: /read privacy policy/i })).toBeInTheDocument()
+  })
+
+  it('opens the privacy modal when the privacy link is clicked', () => {
+    render(<DirectoryUpload onPhotosUploaded={vi.fn()} />)
+    fireEvent.click(screen.getByRole('button', { name: /read privacy policy/i }))
+    expect(screen.getByRole('dialog', { name: /privacy policy/i })).toBeInTheDocument()
+  })
 })
