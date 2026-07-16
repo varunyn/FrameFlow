@@ -205,7 +205,7 @@ button { font: inherit; }
   position: absolute;
   z-index: 35;
   right: 24px;
-  bottom: 124px;
+  top: 29px;
   padding: 10px 16px;
   font-size: 11px;
 }
@@ -332,6 +332,7 @@ button { font: inherit; }
   .gallery-header { top: 24px; }
   .back-button { top: 21px; left: 16px; padding: 8px 10px; }
   .back-button span { display: none; }
+  .change-album-button { top: 21px; right: 16px; padding: 8px 10px; }
   .fullscreen-button { bottom: 73px; padding: 12px 17px; font-size: 13px; }
   .photo-card { width: clamp(145px, 47vw, 215px); }
   .focus-label { top: calc(50% + 28vw); }
@@ -364,7 +365,7 @@ button { font: inherit; }
   inset: 0;
   display: grid;
   place-items: center;
-  padding: clamp(20px, 5vw, 72px);
+  padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
   background: rgba(3, 2, 7, .78);
   backdrop-filter: blur(18px) saturate(120%);
   cursor: pointer;
@@ -372,14 +373,22 @@ button { font: inherit; }
 
 .privacy-modal__panel {
   position: relative;
-  width: min(100%, 460px);
-  max-height: 100%;
-  padding: 28px;
+  justify-self: center;
+  align-self: center;
+  margin: 0;
+  width: 100%;
+  max-width: 820px;
+  min-height: min(320px, calc(100dvh - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: clamp(28px, 4vw, 48px) clamp(28px, 5vw, 56px);
   border: 1px solid rgba(199, 167, 244, .28);
   border-radius: 14px;
   background: linear-gradient(145deg, rgba(34, 29, 48, .97), rgba(10, 9, 16, .98));
   box-shadow: 0 32px 100px rgba(0, 0, 0, .72), 0 0 70px rgba(116, 56, 206, .18);
   cursor: default;
+  overscroll-behavior: contain;
 }
 
 .privacy-modal__close {
@@ -419,6 +428,22 @@ button { font: inherit; }
 }
 
 .privacy-modal__list li { margin-bottom: 8px; }
+
+@media (max-width: 700px) {
+  .privacy-modal__panel {
+    max-width: 100%;
+    min-height: min(280px, calc(100dvh - 32px));
+    max-height: calc(100dvh - 32px);
+    padding: 24px 22px;
+  }
+
+  .privacy-modal__heading { padding-right: 42px; }
+  .privacy-modal__list {
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }

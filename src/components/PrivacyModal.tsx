@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import { X } from 'lucide-react'
 import { useReducedMotion } from '../hooks/useReducedMotion'
@@ -22,7 +23,7 @@ export function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
     }
   }, [isOpen, onClose])
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <motion.div
@@ -63,6 +64,7 @@ export function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   )
 }
